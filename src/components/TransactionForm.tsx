@@ -38,13 +38,20 @@ const TransactionForm = ({
           {category.icon}
           {category.name}
         </h3>
-        <input 
-        type="number" 
-        placeholder="amount" 
-      
-        {...register("amount", {required: true, min: 0.01, pattern:/^\d+(\.\d{1,2})?$/ })}/>
+        <input
+          type="number"
+          placeholder="amount"
+          step="0.01"
+          {...register("amount", {
+            required: true,
+            min: 0.01,
+            pattern: /^\d+(\.\d{1,2})?$/,
+          })}
+        />
         <button type="submit">Add & Close</button>
-        <button type="button" onClick={onClose}>Close</button>
+        <button type="button" onClick={onClose}>
+          Close
+        </button>
       </form>
     </>
   );

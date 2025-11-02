@@ -1,4 +1,3 @@
-
 export type Transaction = {
   id: string;
   category: string;

@@ -19,23 +19,22 @@ const Dashboard = () => {
 
   const handleCloseForm = () => {
     setSelectedcategory(null);
-  }
+  };
 
   const handleSubmit = (transaction: Transaction) => {
     addTransaction(transaction);
   };
 
-
   return (
     <>
       <Balance />
       <Chart />
-      <CategoryList onCategoryClick={handleCategoryClick}/>
+      <CategoryList onCategoryClick={handleCategoryClick} />
       {selectedCategory && (
         <TransactionForm
-        category= {selectedCategory}
-        onClose={handleCloseForm}
-        onSubmit={handleSubmit} 
+          category={selectedCategory}
+          onClose={handleCloseForm}
+          onSubmit={handleSubmit}
         />
       )}
     </>
