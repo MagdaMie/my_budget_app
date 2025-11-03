@@ -23,7 +23,7 @@ const TransactionForm = ({
     const transaction: Transaction = {
       id: crypto.randomUUID(),
       category: category.name,
-      amount: data.amount,
+      amount: Number(data.amount),
       date: new Date().toISOString(),
     };
     onSubmit(transaction);
