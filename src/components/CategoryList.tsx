@@ -1,6 +1,6 @@
-import { categories } from "../data/categories";
-import type { Category } from "../types/category";
-import { useTransactionStore } from "../store/useTransactionStore";
+import { categories } from '../data/categories';
+import type { Category } from '../types/category';
+import { useTransactionStore } from '../store/useTransactionStore';
 
 type CategoryListProps = {
   onCategoryClick: (category: Category) => void;

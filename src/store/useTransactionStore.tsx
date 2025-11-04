@@ -1,5 +1,5 @@
-import { create } from "zustand";
-import type { Transaction } from "../types/transaction";
+import { create } from 'zustand';
+import type { Transaction } from '../types/transaction';
 
 type TransactionState = {
   transactions: Transaction[];

@@ -1,6 +1,6 @@
-import { useForm } from "react-hook-form";
-import type { Transaction } from "../types/transaction";
-import type { Category } from "../types/category";
+import { useForm } from 'react-hook-form';
+import type { Transaction } from '../types/transaction';
+import type { Category } from '../types/category';
 
 type TransactionFormProps = {
   category: Category;
@@ -12,11 +12,7 @@ type FormValues = {
   amount: number;
 };
 
-const TransactionForm = ({
-  category,
-  onClose,
-  onSubmit,
-}: TransactionFormProps) => {
+const TransactionForm = ({ category, onClose, onSubmit }: TransactionFormProps) => {
   const { register, handleSubmit, reset } = useForm<FormValues>();
 
   const submitHandler = (data: FormValues) => {
@@ -42,7 +38,7 @@ const TransactionForm = ({
           type="number"
           placeholder="amount"
           step="0.01"
-          {...register("amount", {
+          {...register('amount', {
             required: true,
             min: 0.01,
             pattern: /^\d+(\.\d{1,2})?$/,
