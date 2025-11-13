@@ -1,5 +1,8 @@
 import { createTheme } from "@mui/material/styles";
 
+const baseFont = '"Lato", "Verdana", "Geneva", sans-serif';
+const headingFont = '"Montserrat", "Helvetica", "Arial", sans-serif';
+
 export const theme = createTheme({
   palette: {
     mode: "light",
@@ -11,24 +14,12 @@ export const theme = createTheme({
     success: { main: "#81c784" },
   },
   typography: {
-    fontFamily: '"Lato", "Verdana", "Geneva", sans-serif',
-    h1: {
-      fontFamily: '"Montserrat", "Helvetica", "Arial", sans-serif',
-    },
-    h2: {
-      fontFamily: '"Montserrat", "Helvetica", "Arial", sans-serif',
-    },
-    h3: {
-      fontFamily: '"Montserrat", "Helvetica", "Arial", sans-serif',
-    },
-    h4: {
-      fontFamily: '"Montserrat", "Helvetica", "Arial", sans-serif',
-    },
-    h5: {
-      fontFamily: '"Montserrat", "Helvetica", "Arial", sans-serif',
-    },
-    h6: {
-      fontFamily: '"Montserrat", "Helvetica", "Arial", sans-serif',
-    },
+    fontFamily: baseFont,
+    h1: { fontFamily: headingFont },
+    h2: { fontFamily: headingFont },
+    h3: { fontFamily: headingFont },
+    h4: { fontFamily: headingFont },
+    h5: { fontFamily: headingFont },
+    h6: { fontFamily: headingFont },
   },
 });
