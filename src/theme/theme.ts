@@ -11,24 +11,24 @@ export const theme = createTheme({
     success: { main: "#81c784" },
   },
   typography: {
-    fontFamily: "\"Lato\", \"Verdana\", \"Geneva\", sans-serif", 
+    fontFamily: '"Lato", "Verdana", "Geneva", sans-serif',
     h1: {
-      fontFamily: "\"Montserrat\", \"Helvetica\", \"Arial\", sans-serif",
+      fontFamily: '"Montserrat", "Helvetica", "Arial", sans-serif',
     },
     h2: {
-      fontFamily: "\"Montserrat\", \"Helvetica\", \"Arial\", sans-serif",
+      fontFamily: '"Montserrat", "Helvetica", "Arial", sans-serif',
     },
     h3: {
-      fontFamily: "\"Montserrat\", \"Helvetica\", \"Arial\", sans-serif",
+      fontFamily: '"Montserrat", "Helvetica", "Arial", sans-serif',
     },
     h4: {
-      fontFamily: "\"Montserrat\", \"Helvetica\", \"Arial\", sans-serif",
+      fontFamily: '"Montserrat", "Helvetica", "Arial", sans-serif',
     },
     h5: {
-      fontFamily: "\"Montserrat\", \"Helvetica\", \"Arial\", sans-serif",
+      fontFamily: '"Montserrat", "Helvetica", "Arial", sans-serif',
     },
     h6: {
-      fontFamily: "\"Montserrat\", \"Helvetica\", \"Arial\", sans-serif",
+      fontFamily: '"Montserrat", "Helvetica", "Arial", sans-serif',
     },
   },
 });
