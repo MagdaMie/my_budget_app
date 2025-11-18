@@ -22,7 +22,7 @@ const AppTextField = ({
   multiline = false,
   rows,
   disable = false,
-  sx
+  sx,
 }: TextFieldProps) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChange(event.target.value);
@@ -38,7 +38,7 @@ const AppTextField = ({
       rows={rows}
       disabled={disable}
       sx={sx}
-    ></TextField>
+    />
   );
 };
 

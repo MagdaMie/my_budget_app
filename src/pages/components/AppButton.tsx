@@ -1,31 +1,33 @@
-import { Button } from "@mui/material";
-import type { ButtonProps } from "@mui/material";
+import { Button, type ButtonProps } from "@mui/material";
 import type { SxProps, Theme } from "@mui/material";
+
+type ButtonType = "add" | "edit" | "delete";
 
 type AppButtonProps = {
   label: string;
-  type: "add" | "edit" | "delete";
+  type: ButtonType;
   variant?: ButtonProps["variant"];
   onClick?: ButtonProps["onClick"];
   sx?: SxProps<Theme>;
 };
 
-const AppButton = ({ label, type, variant, onClick, sx }: AppButtonProps) => {
-  let color: "primary" | "secondary" | "error" = "primary";
+const TYPE_TO_COLOR: Record<ButtonType, ButtonProps["color"]> = {
+  add: "primary",
+  edit: "primary",
+  delete: "error",
+};
 
-  if (type === "edit") {
-    color = "primary";
-  }
-  if (type === "delete") {
-    color = "error";
-  }
+const AppButton = ({
+  label,
+  type,
+  variant = "contained",
+  onClick,
+  sx,
+}: AppButtonProps) => {
+  const color = TYPE_TO_COLOR[type];
+
   return (
-    <Button
-      color={color}
-      variant={variant || "contained"}
-      onClick={onClick}
-      sx={sx}
-    >
+    <Button color={color} variant={variant} onClick={onClick} sx={sx}>
       {label}
     </Button>
   );

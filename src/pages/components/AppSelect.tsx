@@ -1,4 +1,10 @@
-import { Select, MenuItem, InputLabel, FormControl } from "@mui/material";
+import {
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl,
+  type SelectChangeEvent,
+} from "@mui/material";
 
 type Option = {
   label: string;
@@ -7,7 +13,7 @@ type Option = {
 
 type AppSelectProps = {
   label?: string;
-  value: string | number;
+  value: string;
   options: Option[];
   onChange: (value: string) => void;
   fullWidth?: boolean;
@@ -22,14 +28,16 @@ const AppSelect = ({
   fullWidth = true,
   disabled = false,
 }: AppSelectProps) => {
+  const selectId = label ? label.replace(/\s+/g, "-").toLowerCase() : "select";
+
+  const handleChange = (event: SelectChangeEvent<string>) => {
+    onChange(event.target.value);
+  };
+
   return (
     <FormControl disabled={disabled} fullWidth={fullWidth}>
-      {label && <InputLabel>{label}</InputLabel>}
-      <Select
-        value={value}
-        label={label}
-        onChange={(e) => onChange(e.target.value as string)}
-      >
+      {label && <InputLabel htmlFor={selectId}>{label}</InputLabel>}
+      <Select id={selectId} value={value} label={label} onChange={handleChange}>
         {options.map((opt) => (
           <MenuItem key={opt.value} value={opt.value}>
             {opt.label}

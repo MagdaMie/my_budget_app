@@ -1,44 +1,32 @@
-import { IconButton, Tooltip } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
+import { IconButton, Tooltip, type IconButtonProps } from "@mui/material";
+
+type IconButtonType = "close" | "edit" | "delete";
 
 type AppIconButtonProps = {
-  type: "close" | "edit" | "delete";
+  type: IconButtonType;
+  icon: React.ReactNode;
   onClick: () => void;
-  size?: "small" | "medium" | "large";
+  size?: IconButtonProps["size"];
+  color?: IconButtonProps["color"];
   tooltip?: string;
-  color?: "primary" | "secondary" | "error" | "default";
+  ariaLabel: string;
+  
 };
 
 const AppIconButton = ({
-  type,
+  icon,
   onClick,
   size,
-  tooltip,
   color,
+  tooltip,
+  ariaLabel
 }: AppIconButtonProps) => {
-  let IconComponet: React.ReactNode;
-
-  switch (type) {
-    case "close":
-      IconComponet = <CloseIcon />;
-      break;
-    case "edit":
-      IconComponet = <EditIcon />;
-      break;
-    case "delete":
-      IconComponet = <DeleteIcon />;
-      break;
-    default:
-      IconComponet = null;
-  }
-
   const button = (
-    <IconButton onClick={onClick} size={size} color={color}>
-      {IconComponet}
+    <IconButton onClick={onClick} size={size} color={color} aria-label={ariaLabel}>
+      {icon}
     </IconButton>
   );
+
   return tooltip ? <Tooltip title={tooltip}>{button}</Tooltip> : button;
 };
 
