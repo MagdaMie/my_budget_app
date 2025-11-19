@@ -10,7 +10,6 @@ type AppIconButtonProps = {
   color?: IconButtonProps["color"];
   tooltip?: string;
   ariaLabel: string;
-  
 };
 
 const AppIconButton = ({
