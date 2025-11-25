@@ -6,11 +6,12 @@ import AppTextField from "./AppTextField";
 import AppSelect from "./AppSelect";
 import CloseIcon from "@mui/icons-material/Close";
 import { categories } from "../../data/categories";
+import { useTransactionStore } from "../../store/transactionStore";
 
 type FormValues = {
-  amount?: string;
-  description?: string;
-  category?: string;
+  amount: string;
+  description: string;
+  category: string;
 };
 
 const AddTransactionCard = () => {
@@ -23,7 +24,10 @@ const AddTransactionCard = () => {
     },
   });
 
+  const addTransaction = useTransactionStore((state) => state.addTransaction);
+
   const onSubmit = (data: FormValues) => {
+    addTransaction(data);
     // eslint-disable-next-line no-console
     console.log("Transaction added:", data);
     reset();
@@ -124,13 +128,6 @@ const AddTransactionCard = () => {
               />
             )}
           />
-          {/*
-          <AppSelect
-            label="Category"
-            value={category}
-            options={categories}
-            onChange={() => {}}
-          /> */}
         </Box>
       </form>
       <Box
