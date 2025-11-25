@@ -3,7 +3,7 @@ import {
   MenuItem,
   InputLabel,
   FormControl,
-  type SelectChangeEvent,
+  FormHelperText,
 } from "@mui/material";
 
 type Option = {
@@ -13,37 +13,38 @@ type Option = {
 
 type AppSelectProps = {
   label?: string;
-  value: string;
+  value: string | undefined;
   options: Option[];
   onChange: (value: string) => void;
   fullWidth?: boolean;
   disabled?: boolean;
+  error?: boolean;
+  helperText?: string;
 };
 
 const AppSelect = ({
   label,
   value,
   options,
-  onChange,
   fullWidth = true,
   disabled = false,
+  onChange,
+  error,
+  helperText,
 }: AppSelectProps) => {
   const selectId = label ? label.replace(/\s+/g, "-").toLowerCase() : "select";
 
-  const handleChange = (event: SelectChangeEvent<string>) => {
-    onChange(event.target.value);
-  };
-
   return (
-    <FormControl disabled={disabled} fullWidth={fullWidth}>
+    <FormControl disabled={disabled} fullWidth={fullWidth} error={error}>
       {label && <InputLabel htmlFor={selectId}>{label}</InputLabel>}
-      <Select id={selectId} value={value} label={label} onChange={handleChange}>
+      <Select id={selectId} value={value} label={label} onChange={(e) => onChange(e.target.value)}>
         {options.map((opt) => (
           <MenuItem key={opt.value} value={opt.value}>
             {opt.label}
           </MenuItem>
         ))}
       </Select>
+      {helperText && <FormHelperText>{helperText}</FormHelperText>}
     </FormControl>
   );
 };
