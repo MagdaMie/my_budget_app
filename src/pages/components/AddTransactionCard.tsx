@@ -7,15 +7,15 @@ import AppSelect from "./AppSelect";
 import CloseIcon from "@mui/icons-material/Close";
 import { categories } from "../../data/categories";
 import { useTransactionStore } from "../../store/transactionStore";
-
-type FormValues = {
-  amount: string;
-  description: string;
-  category: string;
-};
+import {
+  transactionSchema,
+  type TransactionFormValues,
+} from "../../validation/transactionValidation";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const AddTransactionCard = () => {
-  const { control, handleSubmit, reset } = useForm<FormValues>({
+  const { control, handleSubmit, reset } = useForm<TransactionFormValues>({
+    resolver: zodResolver(transactionSchema),
     mode: "onChange",
     defaultValues: {
       amount: "",
@@ -26,7 +26,7 @@ const AddTransactionCard = () => {
 
   const addTransaction = useTransactionStore((state) => state.addTransaction);
 
-  const onSubmit = (data: FormValues) => {
+  const onSubmit = (data: TransactionFormValues) => {
     addTransaction(data);
     // eslint-disable-next-line no-console
     console.log("Transaction added:", data);
@@ -57,7 +57,7 @@ const AddTransactionCard = () => {
           <h3>Add transaction</h3>
           <AppIconButton
             icon={<CloseIcon />}
-            onClick={() => {}}
+            onClick={() => {}} //bedzie podpiete pod modal //
             type="close"
             ariaLabel="close"
           />
@@ -72,13 +72,6 @@ const AddTransactionCard = () => {
           <Controller
             name="amount"
             control={control}
-            rules={{
-              required: "Amount is required",
-              pattern: {
-                value: /^[0-9]+(\.[0-9]{1,2})?$/,
-                message: "Only numbers, max 2 decimals",
-              },
-            }}
             render={({ field, fieldState }) => (
               <AppTextField
                 {...field}
@@ -93,12 +86,6 @@ const AddTransactionCard = () => {
           <Controller
             name="description"
             control={control}
-            rules={{
-              maxLength: {
-                value: 50,
-                message: "Max 50 characters",
-              },
-            }}
             render={({ field, fieldState }) => (
               <AppTextField
                 {...field}
@@ -115,9 +102,6 @@ const AddTransactionCard = () => {
           <Controller
             name="category"
             control={control}
-            rules={{
-              required: "Category is required",
-            }}
             render={({ field, fieldState }) => (
               <AppSelect
                 {...field}
@@ -138,7 +122,11 @@ const AddTransactionCard = () => {
         }}
       >
         <AppButton label="Add" type="add" onClick={handleSubmit(onSubmit)} />
-        <AppButton label="Close" type="delete" onClick={() => {}} />
+        <AppButton
+          label="Close"
+          type="delete"
+          onClick={() => {}} //bedzie podpiete pod modal
+        />
       </Box>
     </Box>
   );

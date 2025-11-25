@@ -1,5 +1,4 @@
 import { create } from "zustand";
-import Transactions from "../pages/Transactions";
 
 export type Transaction = {
   id: string;
