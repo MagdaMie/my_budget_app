@@ -13,7 +13,7 @@ type Option = {
 
 type AppSelectProps = {
   label?: string;
-  value: string | undefined;
+  value?: string ;
   options: Option[];
   onChange: (value: string) => void;
   fullWidth?: boolean;

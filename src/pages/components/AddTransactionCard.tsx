@@ -28,8 +28,6 @@ const AddTransactionCard = () => {
 
   const onSubmit = (data: TransactionFormValues) => {
     addTransaction(data);
-    // eslint-disable-next-line no-console
-    console.log("Transaction added:", data);
     reset();
   };
   return (
@@ -113,21 +111,22 @@ const AddTransactionCard = () => {
             )}
           />
         </Box>
+
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "end",
+            gap: 1,
+          }}
+        >
+          <AppButton label="Add" buttonType="add" type="submit" />
+          <AppButton
+            label="Close"
+            buttonType="delete"
+            onClick={() => {}} //bedzie podpiete pod modal
+          />
+        </Box>
       </form>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "end",
-          gap: 1,
-        }}
-      >
-        <AppButton label="Add" type="add" onClick={handleSubmit(onSubmit)} />
-        <AppButton
-          label="Close"
-          type="delete"
-          onClick={() => {}} //bedzie podpiete pod modal
-        />
-      </Box>
     </Box>
   );
 };
