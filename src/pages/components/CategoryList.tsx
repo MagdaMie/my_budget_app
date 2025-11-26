@@ -1,11 +1,16 @@
+import { useState } from "react";
 import CategoryCard from "./CategoryCard";
 import { categories } from "../../data/categories";
 import { useTransactionStore } from "../../store/transactionStore";
 import Grid from "@mui/material/Grid";
-import { Container } from "@mui/material";
+import { Container, Dialog } from "@mui/material";
+import AddTransactionCard from "./AddTransactionCard";
 
 const CategoryList = () => {
   const transactions = useTransactionStore((state) => state.transactions);
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
 
   const calculateTotal = (categoryValue: string) =>
     transactions
@@ -13,8 +18,13 @@ const CategoryList = () => {
       .reduce((sum, t) => sum + Number(t.amount), 0);
 
   const handleSelectCategory = (value: string) => {
-    // eslint-disable-next-line no-console
-    console.log("Selected category: ", value);
+    setSelectedCategory(value);
+    setIsOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsOpen(false);
+    setSelectedCategory("");
   };
 
   return (
@@ -30,6 +40,14 @@ const CategoryList = () => {
           </Grid>
         ))}
       </Grid>
+      <Dialog open={isOpen} onClose={handleCloseModal}>
+        {isOpen && (
+          <AddTransactionCard
+            defaultCategory={selectedCategory}
+            onClose={handleCloseModal}
+          />
+        )}
+      </Dialog>
     </Container>
   );
 };

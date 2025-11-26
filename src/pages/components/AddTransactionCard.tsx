@@ -13,14 +13,22 @@ import {
 } from "../../validation/transactionValidation";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-const AddTransactionCard = () => {
+type AddTransactionCardProps = {
+  defaultCategory: string;
+  onClose: () => void;
+};
+
+const AddTransactionCard = ({
+  defaultCategory,
+  onClose,
+}: AddTransactionCardProps) => {
   const { control, handleSubmit, reset } = useForm<TransactionFormValues>({
     resolver: zodResolver(transactionSchema),
     mode: "onChange",
     defaultValues: {
       amount: "",
       description: "",
-      category: "",
+      category: defaultCategory,
     },
   });
 
@@ -29,6 +37,7 @@ const AddTransactionCard = () => {
   const onSubmit = (data: TransactionFormValues) => {
     addTransaction(data);
     reset();
+    onClose();
   };
   return (
     <Box
@@ -55,7 +64,7 @@ const AddTransactionCard = () => {
           <h3>Add transaction</h3>
           <AppIconButton
             icon={<CloseIcon />}
-            onClick={() => {}} //bedzie podpiete pod modal 
+            onClick={onClose}
             type="close"
             ariaLabel="close"
           />
@@ -118,11 +127,7 @@ const AddTransactionCard = () => {
             }}
           >
             <AppButton label="Add" buttonType="add" type="submit" />
-            <AppButton
-              label="Close"
-              buttonType="delete"
-              onClick={() => {}} //bedzie podpiete pod modal
-            />
+            <AppButton label="Close" buttonType="delete" onClick={onClose} />
           </Box>
         </Box>
       </form>
