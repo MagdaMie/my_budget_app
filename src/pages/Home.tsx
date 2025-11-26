@@ -1,3 +1,4 @@
+import CategoryList from "./components/CategoryList";
 import AddTransactionCard from "./components/AddTransactionCard";
 import { useTransactionStore } from "../store/transactionStore";
 import { Box } from "@mui/material";
@@ -21,6 +22,7 @@ const Home = () => {
           </div>
         ))}
       </div>
+      <CategoryList />
     </>
   );
 };
