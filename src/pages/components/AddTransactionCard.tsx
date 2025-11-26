@@ -55,7 +55,7 @@ const AddTransactionCard = () => {
           <h3>Add transaction</h3>
           <AppIconButton
             icon={<CloseIcon />}
-            onClick={() => {}} //bedzie podpiete pod modal //
+            onClick={() => {}} //bedzie podpiete pod modal 
             type="close"
             ariaLabel="close"
           />
@@ -110,21 +110,20 @@ const AddTransactionCard = () => {
               />
             )}
           />
-        </Box>
-
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "end",
-            gap: 1,
-          }}
-        >
-          <AppButton label="Add" buttonType="add" type="submit" />
-          <AppButton
-            label="Close"
-            buttonType="delete"
-            onClick={() => {}} //bedzie podpiete pod modal
-          />
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "end",
+              gap: 1,
+            }}
+          >
+            <AppButton label="Add" buttonType="add" type="submit" />
+            <AppButton
+              label="Close"
+              buttonType="delete"
+              onClick={() => {}} //bedzie podpiete pod modal
+            />
+          </Box>
         </Box>
       </form>
     </Box>
