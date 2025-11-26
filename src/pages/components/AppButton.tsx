@@ -5,7 +5,8 @@ type ButtonType = "add" | "edit" | "delete";
 
 type AppButtonProps = {
   label: string;
-  type: ButtonType;
+  buttonType: ButtonType;
+  type?: "button" | "submit" | "reset";
   variant?: ButtonProps["variant"];
   onClick?: ButtonProps["onClick"];
   sx?: SxProps<Theme>;
@@ -19,15 +20,22 @@ const TYPE_TO_COLOR: Record<ButtonType, ButtonProps["color"]> = {
 
 const AppButton = ({
   label,
-  type,
+  buttonType,
+  type = "button",
   variant = "contained",
   onClick,
   sx,
 }: AppButtonProps) => {
-  const color = TYPE_TO_COLOR[type];
+  const color = TYPE_TO_COLOR[buttonType];
 
   return (
-    <Button color={color} variant={variant} onClick={onClick} sx={sx}>
+    <Button
+      color={color}
+      variant={variant}
+      type={type}
+      onClick={onClick}
+      sx={sx}
+    >
       {label}
     </Button>
   );

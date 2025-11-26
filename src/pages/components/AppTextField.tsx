@@ -3,7 +3,7 @@ import type { SxProps, Theme } from "@mui/material";
 
 type TextFieldProps = {
   label: string;
-  value: string;
+  value: string | undefined;
   onChange: (value: string) => void;
   type?: "text" | "number";
   placeholder?: string;
@@ -11,6 +11,8 @@ type TextFieldProps = {
   rows?: number;
   disable?: boolean;
   sx?: SxProps<Theme>;
+  error?: boolean;
+  helperText?: string;
 };
 
 const AppTextField = ({
@@ -23,6 +25,8 @@ const AppTextField = ({
   rows,
   disable = false,
   sx,
+  error,
+  helperText,
 }: TextFieldProps) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChange(event.target.value);
@@ -38,6 +42,8 @@ const AppTextField = ({
       rows={rows}
       disabled={disable}
       sx={sx}
+      error={error} 
+      helperText={helperText}
     />
   );
 };
