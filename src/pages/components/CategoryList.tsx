@@ -1,21 +1,23 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { categories } from "@/data/categories";
 import CategoryCard from "./CategoryCard";
-import { categories } from "../../data/categories";
-import { useTransactionStore } from "../../store/transactionStore";
+import { useTransactionStore } from "@/store/transactionStore";
 import Grid from "@mui/material/Grid";
-import { Container, Dialog } from "@mui/material";
-import AddTransactionCard from "./AddTransactionCard";
+import { Container } from "@mui/material";
+import AddTransactionModal from "./modals/AddTransactionModal";
 
 const CategoryList = () => {
   const transactions = useTransactionStore((state) => state.transactions);
 
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [selectedCategory, setSelectedCategory] = useState("");
 
-  const calculateTotal = (categoryValue: string) =>
-    transactions
-      .filter((t) => t.category === categoryValue)
-      .reduce((sum, t) => sum + Number(t.amount), 0);
+  const calculateTotal = useMemo(() => {
+    return (categoryValue: string) =>
+      transactions
+        .filter((t) => t.category === categoryValue)
+        .reduce((sum, t) => sum + Number(t.amount), 0);
+  }, [transactions]);
 
   const handleSelectCategory = (value: string) => {
     setSelectedCategory(value);
@@ -31,23 +33,20 @@ const CategoryList = () => {
     <Container maxWidth="lg" sx={{ p: 4 }}>
       <Grid container spacing={2}>
         {categories.map((cat) => (
-          <Grid key={cat.value}>
+          <Grid key={cat.value} size={{ xs: 6, sm: 3, md: 2, lg: 3 }}>
             <CategoryCard
               category={cat}
-              total={calculateTotal(cat.value)}
+              totalCategoryAmount={calculateTotal(cat.value)}
               onSelect={() => handleSelectCategory(cat.value)}
             />
           </Grid>
         ))}
       </Grid>
-      <Dialog open={isOpen} onClose={handleCloseModal}>
-        {isOpen && (
-          <AddTransactionCard
-            defaultCategory={selectedCategory}
-            onClose={handleCloseModal}
-          />
-        )}
-      </Dialog>
+      <AddTransactionModal
+        isOpen={isOpen}
+        onClose={handleCloseModal}
+        defaultCategory={selectedCategory}
+      />
     </Container>
   );
 };

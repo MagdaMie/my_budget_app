@@ -1,56 +1,42 @@
-import { Card, CardActionArea, Box, Typography } from "@mui/material";
-import { type Category } from "../../data/categories";
+import { Card, CardActionArea, Box, Typography, Stack } from "@mui/material";
+import { type Category } from "@/data/categories";
+import { formatLargeNumber } from "@/helpers/formatLargeNumber";
 
 type CategoryCardProps = {
   category: Category;
-  total?: number;
+  totalCategoryAmount?: number;
   onSelect: () => void;
 };
 
-const CategoryCard = ({ category, total = 0, onSelect }: CategoryCardProps) => {
+const CategoryCard = ({
+  category,
+  totalCategoryAmount = 0,
+  onSelect,
+}: CategoryCardProps) => {
   const Icon = category.icon;
 
-  const formatLargeNumber = (num: number) => {
-    if (num >= 1_000_000_000_000) {
-      return (num / 1_000_000_000_000).toFixed(1) + "B";
-    } // bilion
-    if (num >= 1_000_000) {
-      return (num / 1_000_000).toFixed(1) + "M";
-    } // milion
-    if (num >= 1_000) {
-      return (num / 1_000).toFixed(1) + "k";
-    } // tysiąc
-    return num.toString();
-  };
-
   return (
-    <Card sx={{ width: 130 }}>
-      <CardActionArea onClick={onSelect}>
-        <Box
+    <Card sx={{ width: "100%", maxWidth: 250 }}>
+      <CardActionArea onClick={onSelect} aria-label="Add transaction">
+        <Stack
+          spacing={2}
+          alignItems="center"
           sx={{
             p: 2,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: 1,
           }}
         >
           <Box sx={{ fontSize: 36, color: "secondary.main" }}>
             <Icon fontSize="inherit" />
           </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
+          <Stack alignItems="center">
             <Typography variant="subtitle1" fontWeight={600}>
               {category.label}
             </Typography>
-            <Typography variant="body2">{formatLargeNumber(total)}</Typography>
-          </Box>
-        </Box>
+            <Typography variant="body2">
+              {formatLargeNumber(totalCategoryAmount)}
+            </Typography>
+          </Stack>
+        </Stack>
       </CardActionArea>
     </Card>
   );
