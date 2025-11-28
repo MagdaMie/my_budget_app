@@ -22,13 +22,10 @@ const TransactionCard = ({ transaction }: TransactionCardProps) => {
         borderRadius: 2,
         borderColor: "divider",
         p: 3,
-        mb: 1.5,
         display: "flex",
         flexDirection: "column",
         gap: 1,
         bgcolor: "background.paper",
-        width: "100%",
-        maxWidth: "600px",
       }}
     >
       <Box

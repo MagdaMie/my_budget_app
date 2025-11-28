@@ -1,21 +1,27 @@
-import { useState } from "react";
-import { Box } from "@mui/material";
-import {
-  useTransactionStore,
-  type Transaction,
-} from "../../store/transactionStore";
+import { useMemo, useState } from "react";
+import { Box, Typography } from "@mui/material";
+import { useTransactionStore } from "../../store/transactionStore";
 import TransactionCard from "./TransactionCart";
 import AppSelect from "./AppSelect";
 import { categories } from "../../data/categories";
 
+const CATEGORY_ALL = {
+  value: "",
+  label: "All",
+};
+
 const TransactionsList = () => {
   const transactions = useTransactionStore((state) => state.transactions);
 
-  const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [selectedCategory, setSelectedCategory] = useState<string>(
+    CATEGORY_ALL.value
+  );
 
-  const fillteredTransactions = selectedCategory
-    ? transactions.filter((t) => t.category === selectedCategory)
-    : transactions;
+  const filteredTransactions = useMemo(() => {
+    return selectedCategory
+      ? transactions.filter((t) => t.category === selectedCategory)
+      : transactions;
+  }, [selectedCategory, transactions]);
 
   return (
     <Box
@@ -36,15 +42,36 @@ const TransactionsList = () => {
       >
         <AppSelect
           label="Filter by category"
-          options={[{ value: "", label: "All" }, ...categories]}
+          ariaLabel="Select category to filter transactions"
+          options={[CATEGORY_ALL, ...categories]}
           value={selectedCategory}
           onChange={(value) => setSelectedCategory(value)}
         />
       </Box>
 
-      {fillteredTransactions.map((t: Transaction) => (
-        <TransactionCard key={t.id} transaction={t} />
-      ))}
+      {filteredTransactions.length === 0 ? (
+        <Box sx={{ textAlign: "center", mt: 3 }}>
+          <Typography variant="body1" color="text.secondary">
+            No transactions found for the selected category.
+          </Typography>
+        </Box>
+      ) : (
+        <ul
+          style={{
+            listStyle: "none",
+            padding: 0,
+            margin: 0,
+            width: "100%",
+            maxWidth: "600px",
+          }}
+        >
+          {filteredTransactions.map((t) => (
+            <li key={t.id} style={{ marginBottom: "12px" }}>
+              <TransactionCard transaction={t} />
+            </li>
+          ))}
+        </ul>
+      )}
     </Box>
   );
 };
