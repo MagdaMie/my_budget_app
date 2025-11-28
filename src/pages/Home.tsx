@@ -1,19 +1,12 @@
-import AddTransactionCard from "./components/AddTransactionCard";
+import CategoryList from "./components/CategoryList";
 import { useTransactionStore } from "../store/transactionStore";
-import { Box } from "@mui/material";
+
 const Home = () => {
   const transactions = useTransactionStore((state) => state.transactions);
+
   return (
     <>
       <h1>Home</h1>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
-        <AddTransactionCard />
-      </Box>
       <div>
         {transactions.map((t) => (
           <div key={t.id}>
@@ -21,6 +14,7 @@ const Home = () => {
           </div>
         ))}
       </div>
+      <CategoryList />
     </>
   );
 };
