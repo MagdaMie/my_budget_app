@@ -13,13 +13,14 @@ type Option = {
 
 type AppSelectProps = {
   label?: string;
-  value?: string ;
+  value?: string;
   options: Option[];
   onChange: (value: string) => void;
   fullWidth?: boolean;
   disabled?: boolean;
   error?: boolean;
   helperText?: string;
+  ariaLabel?: string;
 };
 
 const AppSelect = ({
@@ -37,7 +38,12 @@ const AppSelect = ({
   return (
     <FormControl disabled={disabled} fullWidth={fullWidth} error={error}>
       {label && <InputLabel htmlFor={selectId}>{label}</InputLabel>}
-      <Select id={selectId} value={value} label={label} onChange={(e) => onChange(e.target.value)}>
+      <Select
+        id={selectId}
+        value={value}
+        label={label}
+        onChange={(e) => onChange(e.target.value)}
+      >
         {options.map((opt) => (
           <MenuItem key={opt.value} value={opt.value}>
             {opt.label}
