@@ -2,6 +2,7 @@ import { Route, Routes, Link } from "react-router-dom";
 import SuspenseWrapper from "./routes/SuspenseWrapper";
 import { lazy } from "react";
 import { PATHS } from "./routes/paths";
+import ConfirmDeleteModal from "./pages/components/modals/ConfirmDeleteModal";
 
 const Home = lazy(() => import("./pages/Home"));
 const Transactions = lazy(() => import("./pages/Transactions"));
@@ -51,6 +52,7 @@ function App() {
           }
         />
       </Routes>
+      <ConfirmDeleteModal />
     </div>
   );
 }

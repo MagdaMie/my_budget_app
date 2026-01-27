@@ -2,19 +2,15 @@ import { Box, Typography } from "@mui/material";
 import AppIconButton from "./AppIconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {
-  useTransactionStore,
-  type Transaction,
-} from "../../store/transactionStore";
+import { type Transaction } from "../../store/transactionStore";
+import { useModalStore } from "@/store/useModalStore";
 
 type TransactionCardProps = {
   transaction: Transaction;
 };
 
 const TransactionCard = ({ transaction }: TransactionCardProps) => {
-  const removeTransaction = useTransactionStore(
-    (state) => state.removeTransaction
-  );
+  const openModal = useModalStore((state) => state.openModal);
   return (
     <Box
       sx={{
@@ -60,7 +56,7 @@ const TransactionCard = ({ transaction }: TransactionCardProps) => {
             type="delete"
             ariaLabel="delete"
             icon={<DeleteIcon />}
-            onClick={() => removeTransaction(transaction)}
+            onClick={() => openModal("confirmDelete", transaction)}
           />
         </Box>
       </Box>
