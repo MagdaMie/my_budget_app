@@ -6,7 +6,10 @@ import AppTextField from "./AppTextField";
 import AppSelect from "./AppSelect";
 import CloseIcon from "@mui/icons-material/Close";
 import { categories } from "../../data/categories";
-import { useTransactionStore } from "../../store/transactionStore";
+import {
+  useTransactionStore,
+  type Transaction,
+} from "../../store/transactionStore";
 import {
   transactionSchema,
   type TransactionFormValues,
@@ -14,28 +17,41 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 
 type AddTransactionCardProps = {
-  defaultCategory: string;
+  defaultCategory?: string;
   onClose: () => void;
+  transactionToEdit?: Transaction;
 };
 
 const AddTransactionCard = ({
   defaultCategory,
   onClose,
+  transactionToEdit,
 }: AddTransactionCardProps) => {
   const { control, handleSubmit, reset } = useForm<TransactionFormValues>({
     resolver: zodResolver(transactionSchema),
     mode: "onChange",
-    defaultValues: {
-      amount: "",
-      description: "",
-      category: defaultCategory,
-    },
+    defaultValues: transactionToEdit
+      ? {
+          amount: transactionToEdit.amount,
+          description: transactionToEdit.description,
+          category: transactionToEdit.category,
+        }
+      : {
+          amount: "",
+          description: "",
+          category: defaultCategory,
+        },
   });
 
   const addTransaction = useTransactionStore((state) => state.addTransaction);
+  const editTransaction = useTransactionStore((state) => state.editTransaction);
 
   const onSubmit = (data: TransactionFormValues) => {
-    addTransaction(data);
+    if (transactionToEdit) {
+      editTransaction(transactionToEdit.id, data);
+    } else {
+      addTransaction(data);
+    }
     reset();
     onClose();
   };
@@ -126,7 +142,11 @@ const AddTransactionCard = ({
               gap: 1,
             }}
           >
-            <AppButton label="Add" buttonType="add" type="submit" />
+            <AppButton
+              label={transactionToEdit ? "Edit" : "Add"}
+              buttonType={transactionToEdit ? "edit" : "add"}
+              type="submit"
+            />
             <AppButton label="Close" buttonType="delete" onClick={onClose} />
           </Box>
         </Box>

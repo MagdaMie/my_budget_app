@@ -1,10 +1,13 @@
 import { useMemo, useState } from "react";
 import { Box, Typography } from "@mui/material";
-import { useTransactionStore } from "../../store/transactionStore";
+import {
+  useTransactionStore,
+  type Transaction,
+} from "../../store/transactionStore";
 import TransactionCard from "./TransactionCart";
 import AppSelect from "./AppSelect";
 import { categories } from "../../data/categories";
-
+import AddTransactionModal from "./modals/AddTransactionModal";
 const CATEGORY_ALL = {
   value: "",
   label: "All",
@@ -22,6 +25,21 @@ const TransactionsList = () => {
       ? transactions.filter((t) => t.category === selectedCategory)
       : transactions;
   }, [selectedCategory, transactions]);
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [transactionToEdit, setTransactionToEdit] = useState<
+    Transaction | undefined
+  >(undefined);
+
+  const handleOpenModal = (transaction: Transaction) => {
+    setTransactionToEdit(transaction);
+    setIsOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setTransactionToEdit(undefined);
+    setIsOpen(false);
+  };
 
   return (
     <Box
@@ -56,21 +74,31 @@ const TransactionsList = () => {
           </Typography>
         </Box>
       ) : (
-        <ul
-          style={{
-            listStyle: "none",
-            padding: 0,
-            margin: 0,
-            width: "100%",
-            maxWidth: "600px",
-          }}
-        >
-          {filteredTransactions.map((t) => (
-            <li key={t.id} style={{ marginBottom: "12px" }}>
-              <TransactionCard transaction={t} />
-            </li>
-          ))}
-        </ul>
+        <>
+          <ul
+            style={{
+              listStyle: "none",
+              padding: 0,
+              margin: 0,
+              width: "100%",
+              maxWidth: "600px",
+            }}
+          >
+            {filteredTransactions.map((t) => (
+              <li key={t.id} style={{ marginBottom: "12px" }}>
+                <TransactionCard
+                  transaction={t}
+                  openModal={handleOpenModal}
+                />
+              </li>
+            ))}
+          </ul>
+          <AddTransactionModal
+            isOpen={isOpen}
+            onClose={handleCloseModal}
+            transactionToEdit={transactionToEdit} 
+          />{" "}
+        </>
       )}
     </Box>
   );

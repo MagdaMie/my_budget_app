@@ -9,9 +9,10 @@ import {
 
 type TransactionCardProps = {
   transaction: Transaction;
+  openModal: (transaction: Transaction) => void;
 };
 
-const TransactionCard = ({ transaction }: TransactionCardProps) => {
+const TransactionCard = ({ transaction, openModal }: TransactionCardProps) => {
   const removeTransaction = useTransactionStore(
     (state) => state.removeTransaction
   );
@@ -54,7 +55,9 @@ const TransactionCard = ({ transaction }: TransactionCardProps) => {
             type="edit"
             ariaLabel="edit"
             icon={<EditIcon />}
-            onClick={() => {}} //do pozniejszej edycji
+            onClick={() => {
+              openModal(transaction);
+            }}
           />
           <AppIconButton
             type="delete"
