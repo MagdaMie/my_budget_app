@@ -2,7 +2,8 @@ import { Route, Routes, Link } from "react-router-dom";
 import SuspenseWrapper from "./routes/SuspenseWrapper";
 import { lazy } from "react";
 import { PATHS } from "./routes/paths";
-import ConfirmDeleteModal from "./pages/components/modals/ConfirmDeleteModal";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Home = lazy(() => import("./pages/Home"));
 const Transactions = lazy(() => import("./pages/Transactions"));
@@ -52,7 +53,15 @@ function App() {
           }
         />
       </Routes>
-      <ConfirmDeleteModal />
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        newestOnTop
+        closeOnClick
+        pauseOnHover
+        className="my-toast-container"
+        toastClassName="my-toast"
+      />
     </div>
   );
 }

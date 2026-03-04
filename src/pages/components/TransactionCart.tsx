@@ -2,15 +2,29 @@ import { Box, Typography } from "@mui/material";
 import AppIconButton from "./AppIconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { type Transaction } from "../../store/transactionStore";
-import { useModalStore } from "@/store/useModalStore";
+import {
+  useTransactionStore,
+  type Transaction,
+} from "../../store/transactionStore";
+import ConfirmationModal from "./modals/ConfirmationModal";
+import { useDialogState } from "@/helpers/useDialogState";
+import { toast } from "react-toastify";
 
 type TransactionCardProps = {
   transaction: Transaction;
 };
 
 const TransactionCard = ({ transaction }: TransactionCardProps) => {
-  const openModal = useModalStore((state) => state.openModal);
+  const removeTransaction = useTransactionStore(
+    (state) => state.removeTransaction
+  );
+  const { isOpen, open, close } = useDialogState();
+
+  const handleConfirm = () => {
+    removeTransaction(transaction);
+    toast.error("Transaction deleted");
+    close();
+  };
   return (
     <Box
       sx={{
@@ -56,10 +70,17 @@ const TransactionCard = ({ transaction }: TransactionCardProps) => {
             type="delete"
             ariaLabel="delete"
             icon={<DeleteIcon />}
-            onClick={() => openModal("confirmDelete", transaction)}
+            onClick={open}
           />
         </Box>
       </Box>
+      <ConfirmationModal
+        isOpen={isOpen}
+        onCancel={close}
+        onConfirm={handleConfirm}
+        description="Are you sure you want to delete this transaction?"
+        labels={{ yes: "Yes", no: "No" }}
+      />
     </Box>
   );
 };
