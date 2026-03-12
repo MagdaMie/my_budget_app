@@ -79,7 +79,6 @@ const TransactionCard = ({ transaction }: TransactionCardProps) => {
         onCancel={close}
         onConfirm={handleConfirm}
         description="Are you sure you want to delete this transaction?"
-        labels={{ yes: "Yes", no: "No" }}
       />
     </Box>
   );
