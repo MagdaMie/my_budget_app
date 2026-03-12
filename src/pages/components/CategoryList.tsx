@@ -1,16 +1,23 @@
 import { useMemo, useState } from "react";
-import { categories } from "@/data/categories";
+import { type Category } from "@/data/categories";
 import CategoryCard from "./CategoryCard";
 import { useTransactionStore } from "@/store/transactionStore";
 import Grid from "@mui/material/Grid";
 import { Container } from "@mui/material";
 import AddTransactionModal from "./modals/AddTransactionModal";
 
-const CategoryList = () => {
+type CategoryListProps = {
+  categories: Category[];
+};
+
+const CategoryList = ({ categories }: CategoryListProps) => {
   const transactions = useTransactionStore((state) => state.transactions);
 
   const [isOpen, setIsOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [transactionType, setTransactionType] = useState<
+    "income" | "expense" | ""
+  >("");
 
   const calculateTotal = useMemo(() => {
     return (categoryValue: string) =>
@@ -19,14 +26,16 @@ const CategoryList = () => {
         .reduce((sum, t) => sum + Number(t.amount), 0);
   }, [transactions]);
 
-  const handleSelectCategory = (value: string) => {
+  const handleSelectCategory = (value: string, type: "income" | "expense") => {
     setSelectedCategory(value);
+    setTransactionType(type);
     setIsOpen(true);
   };
 
   const handleCloseModal = () => {
     setIsOpen(false);
     setSelectedCategory("");
+    setTransactionType("");
   };
 
   return (
@@ -37,7 +46,7 @@ const CategoryList = () => {
             <CategoryCard
               category={cat}
               totalCategoryAmount={calculateTotal(cat.value)}
-              onSelect={() => handleSelectCategory(cat.value)}
+              onSelect={() => handleSelectCategory(cat.value, cat.type)}
             />
           </Grid>
         ))}
@@ -46,6 +55,7 @@ const CategoryList = () => {
         isOpen={isOpen}
         onClose={handleCloseModal}
         defaultCategory={selectedCategory}
+        transactionType={transactionType}
       />
     </Container>
   );

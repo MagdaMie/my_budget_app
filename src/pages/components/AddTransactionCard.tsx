@@ -5,7 +5,7 @@ import AppIconButton from "./AppIconButton";
 import AppTextField from "./AppTextField";
 import AppSelect from "./AppSelect";
 import CloseIcon from "@mui/icons-material/Close";
-import { categories } from "../../data/categories";
+import { expenseCategories, incomeCategories } from "../../data/categories";
 import { useTransactionStore } from "../../store/transactionStore";
 import {
   transactionSchema,
@@ -15,12 +15,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 type AddTransactionCardProps = {
   defaultCategory: string;
+  transactionType: "income" | "expense" | "";
   onClose: () => void;
 };
 
 const AddTransactionCard = ({
   defaultCategory,
   onClose,
+  transactionType,
 }: AddTransactionCardProps) => {
   const { control, handleSubmit, reset } = useForm<TransactionFormValues>({
     resolver: zodResolver(transactionSchema),
@@ -34,8 +36,11 @@ const AddTransactionCard = ({
 
   const addTransaction = useTransactionStore((state) => state.addTransaction);
 
+  const categoryOption =
+    transactionType === "income" ? incomeCategories : expenseCategories;
+
   const onSubmit = (data: TransactionFormValues) => {
-    addTransaction(data);
+    addTransaction({ ...data, type: transactionType as "income" | "expense" });
     reset();
     onClose();
   };
@@ -113,7 +118,7 @@ const AddTransactionCard = ({
               <AppSelect
                 {...field}
                 label="Category"
-                options={categories}
+                options={categoryOption}
                 error={!!fieldState.error}
                 helperText={fieldState.error?.message}
               />

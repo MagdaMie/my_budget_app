@@ -3,7 +3,7 @@ import { Box, Typography } from "@mui/material";
 import { useTransactionStore } from "../../store/transactionStore";
 import TransactionCard from "./TransactionCart";
 import AppSelect from "./AppSelect";
-import { categories } from "../../data/categories";
+import { expenseCategories, incomeCategories } from "../../data/categories";
 
 const CATEGORY_ALL = {
   value: "",
@@ -43,7 +43,7 @@ const TransactionsList = () => {
         <AppSelect
           label="Filter by category"
           ariaLabel="Select category to filter transactions"
-          options={[CATEGORY_ALL, ...categories]}
+          options={[CATEGORY_ALL, ...expenseCategories, ...incomeCategories]}
           value={selectedCategory}
           onChange={(value) => setSelectedCategory(value)}
         />
