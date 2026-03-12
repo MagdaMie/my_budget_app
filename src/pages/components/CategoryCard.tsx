@@ -16,7 +16,7 @@ const CategoryCard = ({
   const Icon = category.icon;
 
   return (
-    <Card sx={{ width: "100%", maxWidth: 250 }}>
+    <Card sx={{ width: "100%", maxWidth: 150 }}>
       <CardActionArea onClick={onSelect} aria-label="Add transaction">
         <Stack
           spacing={2}

@@ -46,6 +46,15 @@ const TransactionCard = ({ transaction }: TransactionCardProps) => {
       >
         <Box>
           <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            <Typography
+              sx={{
+                color:
+                  transaction.type === "income" ? "success.main" : "error.main",
+                fontWeight: 600,
+              }}
+            >
+              {transaction.type === "income" ? "+" : "-"}
+            </Typography>
             <Typography>{transaction.amount}</Typography>
             <Typography>{transaction.category}</Typography>
           </Box>

@@ -5,6 +5,7 @@ export type Transaction = {
   amount: string;
   description: string;
   category: string;
+  type: "income" | "expense";
 };
 
 type TransactionState = {
